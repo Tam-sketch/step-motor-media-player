@@ -1,5 +1,4 @@
 #include "player.h"
-#include "songs.h"   // contains song_list
 
 int main(void) {
     player_init();

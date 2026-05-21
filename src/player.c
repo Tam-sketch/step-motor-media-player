@@ -210,6 +210,10 @@ void player_init(void) {
 void player_play_song(uint8_t idx) {
     if (idx >= SONG_COUNT) return;
     const Song3* s = &song_list[idx];
+    
+    // Disable sequencer interrupt during state update to prevent race conditions
+    NVIC_DisableIRQ(TIM4_IRQn);
+    
     // Stop all motors
     TIM1->CCR1 = 0; TIM2->CCR1 = 0; TIM3->CCR1 = 0;
     TIM1->EGR = TIM2->EGR = TIM3->EGR = TIM_EGR_UG;
@@ -233,6 +237,9 @@ void player_play_song(uint8_t idx) {
     voice_bass.load_next = 1;
 
     current_song_idx = idx;
+    
+    // Re-enable sequencer interrupt
+    NVIC_EnableIRQ(TIM4_IRQn);
 }
 
 void player_next_song(void) {
@@ -243,6 +250,8 @@ void player_next_song(void) {
 void player_play_3ch(const Step* melody, const Step* harmony, const Step* bass,
                      uint16_t mel_len, uint16_t har_len, uint16_t bas_len) {
     // Direct play (used only if you bypass song registry)
+    NVIC_DisableIRQ(TIM4_IRQn);
+    
     TIM1->CCR1 = 0; TIM2->CCR1 = 0; TIM3->CCR1 = 0;
     TIM1->EGR = TIM2->EGR = TIM3->EGR = TIM_EGR_UG;
 
@@ -253,7 +262,7 @@ void player_play_3ch(const Step* melody, const Step* harmony, const Step* bass,
     voice_bass.steps     = bass;     voice_bass.length    = bas_len;
     voice_bass.note_idx  = 0;        voice_bass.note_ms   = 0;    voice_bass.load_next = 1;
 
-    // not updating current_song_idx, but that's fine
+    NVIC_EnableIRQ(TIM4_IRQn);
 }
 
 void player_set_volume_channel(MotorChannel channel, uint8_t vol) {

@@ -4,6 +4,7 @@
 
 #include "notes.h"
 #include <stdint.h>
+#include "player.h"
 
 // Duration macros (as before)
 #define MS_64  47
@@ -14,8 +15,6 @@
 #define MS_H  750
 #define MS_DH 1125
 #define MS_W 1500
-
-typedef struct { uint8_t note; uint16_t dur_ms; } Step;
 
 // Song structure for 3 motors
 typedef struct {

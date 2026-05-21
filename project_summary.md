@@ -38,9 +38,9 @@ graph TD
     end
     
     subgraph Mechanical Output
-        M -->|Melody Track (Acoustic)| P[NEMA17 Motor - Melody]
-        N -->|Harmony Track (Acoustic)| Q[NEMA17 Motor - Harmony]
-        O -->|Bass Track (Acoustic)| R[NEMA17 Motor - Bass]
+        M -->|Melody Voice| P[NEMA17 Motor - Melody]
+        N -->|Harmony Voice| Q[NEMA17 Motor - Harmony]
+        O -->|Bass Voice| R[NEMA17 Motor - Bass]
     end
 ```
 

@@ -44,13 +44,13 @@ static void clock_init(void) {
 }
 
 // ---------------------------------------------------------------------------
-// DIR PINS (PB0, PB8, PB2) — set low (forward)
+// DIR PINS (PB0, PB1, PB2) — set low (forward)
 // ---------------------------------------------------------------------------
 static void dir_pins_init(void) {
     RCC->AHB1ENR |= RCC_AHB1ENR_GPIOBEN;
-    GPIOB->MODER &= ~((3<<0) | (3<<16) | (3<<4));
-    GPIOB->MODER |=  ((1<<0) | (1<<16) | (1<<4));
-    GPIOB->ODR &= ~((1<<0) | (1<<8) | (1<<2));
+    GPIOB->MODER &= ~((3<<0) | (3<<2) | (3<<4));
+    GPIOB->MODER |=  ((1<<0) | (1<<2) | (1<<4));
+    GPIOB->ODR &= ~((1<<0) | (1<<1) | (1<<2));
 }
 
 // ---------------------------------------------------------------------------
@@ -73,12 +73,12 @@ static void tim1_init(void) {
 }
 
 // ---------------------------------------------------------------------------
-// TIM2 — PWM on PA5 (TIM2_CH1) — Harmony
+// TIM2 — PWM on PA9 (TIM2_CH1) — Harmony
 // ---------------------------------------------------------------------------
 static void tim2_init(void) {
     RCC->AHB1ENR |= RCC_AHB1ENR_GPIOAEN;
-    GPIOA->MODER  = (GPIOA->MODER & ~(3<<10)) | (2<<10);
-    GPIOA->AFR[0] = (GPIOA->AFR[0] & ~(0xF<<20)) | (1<<20);
+    GPIOA->MODER  = (GPIOA->MODER & ~(3<<18)) | (2<<18);
+    GPIOA->AFR[1] = (GPIOA->AFR[1] & ~(0xF<<4)) | (1<<4);
     RCC->APB1ENR |= RCC_APB1ENR_TIM2EN;
     TIM2->PSC   = 99;
     TIM2->ARR   = NOTE_ARR[NOTE_A4];
@@ -91,12 +91,12 @@ static void tim2_init(void) {
 }
 
 // ---------------------------------------------------------------------------
-// TIM3 — PWM on PA6 (TIM3_CH1) — Bass
+// TIM3 — PWM on PA10 (TIM3_CH1) — Bass
 // ---------------------------------------------------------------------------
 static void tim3_init(void) {
     RCC->AHB1ENR |= RCC_AHB1ENR_GPIOAEN;
-    GPIOA->MODER  = (GPIOA->MODER & ~(3<<12)) | (2<<12);
-    GPIOA->AFR[0] = (GPIOA->AFR[0] & ~(0xF<<24)) | (2<<24);
+    GPIOA->MODER  = (GPIOA->MODER & ~(3<<20)) | (2<<20);
+    GPIOA->AFR[1] = (GPIOA->AFR[1] & ~(0xF<<8)) | (2<<8);
     RCC->APB1ENR |= RCC_APB1ENR_TIM3EN;
     TIM3->PSC   = 99;
     TIM3->ARR   = NOTE_ARR[NOTE_A4];

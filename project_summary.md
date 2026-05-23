@@ -23,16 +23,16 @@ graph TD
         H -->|Triggers player_next_song| G
         
         G -->|Melody ARR/CCR| I[TIM1 PWM @ PA8]
-        G -->|Harmony ARR/CCR| J[TIM2 PWM @ PA5]
-        G -->|Bass ARR/CCR| K[TIM3 PWM @ PA6]
-        G -->|Direction Signals| L[GPIOB PB0, PB8, PB2]
+        G -->|Harmony ARR/CCR| J[TIM2 PWM @ PA9]
+        G -->|Bass ARR/CCR| K[TIM3 PWM @ PA10]
+        G -->|Direction Signals| L[GPIOB PB0, PB1, PB2]
     end
     
     subgraph Breadboard Hardware Drivers
         I -->|STEP 1| M[DRV8825 Motor Driver 1]
         L -->|DIR 1 - PB0| M
         J -->|STEP 2| N[DRV8825 Motor Driver 2]
-        L -->|DIR 2 - PB8| N
+        L -->|DIR 2 - PB1| N
         K -->|STEP 3| O[DRV8825 Motor Driver 3]
         L -->|DIR 3 - PB2| O
     end
@@ -55,8 +55,8 @@ The system utilizes three independent NEMA17 stepper motors as sound sources, wh
 | Motor Channel | Function | Timer / Peripheral | PWM STEP Pin (Output) | GPIO DIR Pin (Output) | Hardware Driver Channel |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | **Motor 1 (Melody)** | Melody Voice | TIM1_CH1 | **PA8** | **PB0** | DRV8825 Driver #1 |
-| **Motor 2 (Harmony)** | Chord Harmony | TIM2_CH1 | **PA5** | **PB8** | DRV8825 Driver #2 |
-| **Motor 3 (Bass)** | Bass Line | TIM3_CH1 | **PA6** | **PB2** | DRV8825 Driver #3 |
+| **Motor 2 (Harmony)** | Chord Harmony | TIM2_CH1 | **PA9** | **PB1** | DRV8825 Driver #2 |
+| **Motor 3 (Bass)** | Bass Line | TIM3_CH1 | **PA10** | **PB2** | DRV8825 Driver #3 |
 | **User Control** | Next Song | EXTI0 (GPIOD) | **PD0** (Button Input) | — | Internal User Button |
 
 ### 🛠️ DRV8825 Driver Settings
